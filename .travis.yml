@@ -1,0 +1,7 @@
+language: elixir
+elixir: 1.5
+notifications:
+  recipients:
+    - yevhenii@libraventur.es
+otp_release:
+  - 20.0
