@@ -1,10 +1,7 @@
 defmodule ExMonero.Auth do
+  @moduledoc "Authorization related functions"
 
-
-  def has_auth_credentials?(config) do
-    Map.get(config, :user) && Map.get(config, :password)
-  end
-
+  @doc "Add or replace HTTP Digest auth header in the list of supplied headers"
   def headers(http_method, url, config, challenge_headers, headers) do
     if has_auth_credentials?(config) do
       headers = Enum.reject(headers, fn {name, _} -> String.downcase(name) =="authorization" end)
@@ -13,6 +10,10 @@ defmodule ExMonero.Auth do
     else
       {:error, "Authorization required, but credentials are not provided or incomplete"}
     end
+  end
+
+  defp has_auth_credentials?(config) do
+    Map.get(config, :user) && Map.get(config, :password)
   end
 
   defp digest_auth_header(http_method, url, config, challenge_headers) do
