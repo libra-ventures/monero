@@ -5,15 +5,9 @@ defmodule ExMonero.Request.Url do
   Builds URL for an operation and a config"
   """
   def build(operation, config) do
-    config
-    |> Map.take([:scheme, :host, :port])
-    |> Map.put(:query, query(operation))
+    URI.parse(config.url)
     |> Map.put(:path, operation.path)
-    |> normalize_scheme
-    |> normalize_path
-    |> convert_port_to_integer
-    |> (&struct(URI, &1)).()
-    |> URI.to_string
+    |> URI.to_string()
     |> String.trim_trailing("?")
   end
 

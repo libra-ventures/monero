@@ -24,62 +24,37 @@ defmodule ExMonero.Request do
   def request_and_retry(_method, _url, _service, _config, _headers, _req_body, {:error, reason}), do: {:error, reason}
 
   def request_and_retry(method, url, service, config, headers, req_body, {:attempt, attempt}) do
-    # full_headers = ExAws.Auth.headers(method, url, service, config, headers, req_body)
-
     url = replace_spaces(url)
 
-    # with {:ok, full_headers} <- full_headers do
-      # if config[:debug_requests] do
-        Logger.debug("Request URL: #{inspect url}")
-        # Logger.debug("Request HEADERS: #{inspect full_headers}")
-        Logger.debug("Request BODY: #{inspect req_body}")
-      # end
+    if config[:debug_requests] do
+      Logger.debug("Request URL: #{inspect url}")
+      Logger.debug("Request HEADERS: #{inspect headers}")
+      Logger.debug("Request BODY: #{inspect req_body}")
+    end
 
-      case config[:http_client].request(method, url, req_body, [], Map.get(config, :http_opts, [])) do
-        {:ok, response = %{status_code: status}} when status in 200..299 ->
-          {:ok, response}
-        {:ok, %{status_code: status} = resp} when status in 400..499 ->
-          case client_error(resp, config[:json_codec]) do
-            {:retry, reason} ->
-              request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
-            {:error, reason} -> {:error, reason}
-          end
-        {:ok, %{status_code: status, body: body}} when status >= 500 ->
-          reason = {:http_error, status, body}
-          request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
-        {:error, %{reason: reason}} ->
-          Logger.warn("ExAws: HTTP ERROR: #{inspect reason}")
-          request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
-      end
-    # end
-  end
-
-  def client_error(%{status_code: status, body: body} = error, json_codec) do
-    case json_codec.decode(body) do
-      {:ok, %{"__type" => error_type, "message" => message} = err} ->
-        error_type
-        |> String.split("#")
-        |> case do
-          [_, type] -> handle_aws_error(type, message)
-          _         -> {:error, {:http_error, status, err}}
+    case config[:http_client].request(method, url, req_body, headers, Map.get(config, :http_opts, [])) do
+      {:ok, response = %{status_code: status}} when status in 200..299 ->
+        {:ok, response}
+      {:ok, %{status_code: status, headers: resp_headers} = resp} when status == 401 ->
+        reason = client_error(resp)
+        case  attempt_again?(attempt, reason, config) do
+          {:attempt, attempt} ->
+            with {:ok, full_headers} <- ExMonero.Auth.headers(method, url, config, resp_headers, headers) do
+              request_and_retry(method, url, service, config, full_headers, req_body, {:attempt, attempt})
+            end
+          {:error, reason} -> {:error, reason}
         end
-      _ -> {:error, {:http_error, status, error}}
+      {:ok, %{status_code: status, body: body}} when status >= 500 ->
+        reason = {:http_error, status, body}
+        request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
+      {:error, %{reason: reason}} ->
+        Logger.warn("ExMonero: HTTP ERROR: #{inspect reason}")
+        request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
     end
   end
-  def client_error(%{status_code: status} = error, _) do
-    {:error, {:http_error, status, error}}
-  end
 
-  def handle_aws_error("ProvisionedThroughputExceededException" = type, message) do
-    {:retry, {type, message}}
-  end
-
-  def handle_aws_error("ThrottlingException" = type, message) do
-    {:retry, {type, message}}
-  end
-
-  def handle_aws_error(type, message) do
-    {:error, {type, message}}
+  def client_error(%{status_code: status} = error) do
+    {:http_error, status, error}
   end
 
   def attempt_again?(attempt, reason, config) do

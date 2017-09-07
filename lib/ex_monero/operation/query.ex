@@ -25,7 +25,6 @@ defimpl ExMonero.Operation, for: ExMonero.Operation.Query do
     url = operation
     |> Map.delete(:params)
     |> ExMonero.Request.Url.build(config)
-    |> IO.inspect(label: "url")
     headers = [
       {"content-type", "application/x-www-form-urlencoded"},
     ]

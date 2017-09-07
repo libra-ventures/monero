@@ -17,7 +17,7 @@ defmodule ExMonero.Config.Defaults do
     wallet: %{
       url: {:system, "MONERO_WALLET_RPC_URL"},
       user: {:system, "MONERO_WALLET_RPC_USER"},
-      pasword: {:system, "MONERO_WALLET_RPC_PASSWORD"}
+      password: {:system, "MONERO_WALLET_RPC_PASSWORD"}
     }
   }
 
