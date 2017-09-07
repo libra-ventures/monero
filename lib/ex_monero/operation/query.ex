@@ -1,16 +1,11 @@
 defmodule ExMonero.Operation.Query do
   @moduledoc """
-  Datastructure representing an operation on a Query based AWS service
-
-  These include:
-  - SQS
-  - SNS
-  - SES
+  Datastructure representing an operation on a Monero Daemon endpoint
   """
 
   defstruct [
     path: "/",
-    params: %{},
+    data: %{},
     service: nil,
     action: nil,
     parser: &ExMonero.Utils.identity/2
@@ -21,19 +16,18 @@ end
 
 defimpl ExMonero.Operation, for: ExMonero.Operation.Query do
   def perform(operation, config) do
-    data = operation.params |> URI.encode_query
     url = operation
     |> Map.delete(:params)
     |> ExMonero.Request.Url.build(config)
     headers = [
-      {"content-type", "application/x-www-form-urlencoded"},
+      {"content-type", "application/json"},
     ]
 
-    result = ExMonero.Request.request(:post, url, data, headers, config, operation.service)
+    result = ExMonero.Request.request(:post, url, operation.data, headers, config, operation.service)
     parser = operation.parser
     cond do
       is_function(parser, 2) ->
-        parser.(result, operation.action)
+        parser.(result, config)
       is_function(parser, 3) ->
         parser.(result, operation.action, config)
       true ->
