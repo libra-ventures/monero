@@ -1,10 +1,7 @@
 defmodule Monero.Wallet do
-  # import ExAws.Utils, only: [camelize_key: 1, camelize_keys: 1]
-
   @moduledoc """
-  Operations on AWS SES
-
-  http://docs.aws.amazon.com/ses/latest/APIReference/Welcome.html
+  Operations on Monero wallet RPC. See https://getmonero.org/resources/developer-guides/wallet-rpc.html or
+  https://lessless.github.io/#wallet-json-rpc-calls temporarly.
   """
 
   @doc "Return the wallet's balance."

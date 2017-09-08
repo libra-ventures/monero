@@ -1,7 +1,7 @@
 defmodule Monero.JSON.JSX do
   @behaviour Monero.JSON.Codec
 
-  @moduledoc false
+  @moduledoc "JSX codec"
 
   if Code.ensure_loaded?(:jsx) do
     def encode!(%{} = map) do

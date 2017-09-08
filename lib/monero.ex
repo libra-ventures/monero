@@ -1,6 +1,8 @@
 defmodule Monero do
+  @moduledoc File.read!("#{__DIR__}/../README.md")
+
   @doc """
-  Perform an AWS request
+  Perform a request to the Monero backend
 
   First build an operation from one of the services, and then pass it to this
   function to perform it.
@@ -12,11 +14,9 @@ defmodule Monero do
   ## Examples
 
   ```
-  Monero.S3.list_buckets |> Monero.request
+  Monero.Wallet.getbalance() |> Monero.request()
 
-  Monero.S3.list_buckets |> Monero.request(region: "eu-west-1")
-
-  Monero.Dynamo.get_object("users", "foo@bar.com") |> Monero.request
+  Monero.Wallet.getbalance() |> Monero.request(url: "http://localhost:18082")
   ```
 
   """
@@ -27,10 +27,10 @@ defmodule Monero do
   end
 
   @doc """
-  Perform an AWS request, raise if it fails.
+  Perform a request, raise if it fails.
 
   Same as `request/1,2` except it will either return the successful response from
-  AWS or raise an exception.
+  Monero backend or raise an exception.
   """
   @spec request!(Monero.Operation.t) :: term | no_return
   @spec request!(Monero.Operation.t, Keyword.t) :: term | no_return
