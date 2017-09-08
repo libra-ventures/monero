@@ -1,4 +1,4 @@
-# Monero (NOT READY TO BE USED YET)
+# Monero
 [![Build Status](https://travis-ci.org/libra-ventures/monero.svg?branch=master)](https://travis-ci.org/libra-ventures/monero)
 [![Coverage Status](https://coveralls.io/repos/github/libra-ventures/monero/badge.svg?branch=master)](https://coveralls.io/github/libra-ventures/monero?branch=master)
 
