@@ -1,4 +1,4 @@
-alias ExMonero.Wallet
-alias ExMonero.Request
+alias Monero.Wallet
+alias Monero.Request
 
 Application.ensure_all_started(:hackney)

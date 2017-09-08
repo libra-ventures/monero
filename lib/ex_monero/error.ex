@@ -1,3 +1,3 @@
-defmodule ExMonero.Error do
+defmodule Monero.Error do
   defexception [:message]
 end

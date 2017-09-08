@@ -1,6 +1,6 @@
-defmodule ExMonero.RequestTest do
+defmodule Monero.RequestTest do
   use ExUnit.Case, async: true
-  alias ExMonero.Request
+  alias Monero.Request
   import Support.BypassHelpers
 
   describe "request/2" do

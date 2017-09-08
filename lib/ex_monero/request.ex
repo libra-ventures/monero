@@ -1,4 +1,4 @@
-defmodule ExMonero.Request do
+defmodule Monero.Request do
   require Logger
 
   @moduledoc """
@@ -43,7 +43,7 @@ defmodule ExMonero.Request do
         reason = client_error(resp)
         case  attempt_again?(attempt, reason, config) do
           {:attempt, attempt} ->
-            with {:ok, full_headers} <- ExMonero.Auth.headers(method, url, config, resp_headers, headers) do
+            with {:ok, full_headers} <- Monero.Auth.headers(method, url, config, resp_headers, headers) do
               request_and_retry(method, url, service, config, full_headers, req_body, {:attempt, attempt})
             end
           {:error, reason} -> {:error, reason}
@@ -59,7 +59,7 @@ defmodule ExMonero.Request do
         reason = {:http_error, status, body}
         request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
       {:error, %{reason: reason}} ->
-        Logger.warn("ExMonero: HTTP ERROR: #{inspect reason}")
+        Logger.warn("Monero: HTTP ERROR: #{inspect reason}")
         request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
     end
   end

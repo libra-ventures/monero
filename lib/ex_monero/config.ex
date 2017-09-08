@@ -1,10 +1,10 @@
-defmodule ExMonero.Config do
+defmodule Monero.Config do
 
   @moduledoc false
 
   # Generates the configuration for a service.
   # It starts with the defaults for a given environment
-  # and then merges in the common config from the ex_monero config root,
+  # and then merges in the common config from the monero config root,
   # and then finally any config specified for the particular service
 
   @common_config [
@@ -16,9 +16,9 @@ defmodule ExMonero.Config do
   @doc """
   Builds a complete set of config for an operation.
 
-  1) Defaults are pulled from `ExMonero.Config.Defaults`
-  2) Common values set via e.g `config :ex_monero` are merged in.
-  3) Keys set on the individual service e.g `config :ex_monero, :wallet` are merged in
+  1) Defaults are pulled from `Monero.Config.Defaults`
+  2) Common values set via e.g `config :monero` are merged in.
+  3) Keys set on the individual service e.g `config :monero, :wallet` are merged in
   4) Finally, any configuration overrides are merged in
   """
   def new(service, opts \\ []) do
@@ -30,8 +30,8 @@ defmodule ExMonero.Config do
   end
 
   def build_base(service, overrides \\ %{}) do
-    configuration_root = :ex_monero
-    defaults = ExMonero.Config.Defaults.get(service)
+    configuration_root = :monero
+    defaults = Monero.Config.Defaults.get(service)
     common_config =  configuration_root |> Application.get_all_env() |> Map.new() |> Map.take(@common_config)
     service_config = configuration_root |> Application.get_env(service, []) |> Map.new()
 

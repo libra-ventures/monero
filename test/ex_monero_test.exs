@@ -1,12 +1,12 @@
-defmodule ExMoneroTest do
+defmodule MoneroTest do
   use ExUnit.Case
-  doctest ExMonero
+  doctest Monero
 
   test "has a request function" do
-    assert 1 == :functions |> ExMonero.__info__() |> Keyword.fetch!(:request)
+    assert 1 == :functions |> Monero.__info__() |> Keyword.fetch!(:request)
   end
 
   test "has a request! function" do
-    assert 1 == :functions |> ExMonero.__info__() |> Keyword.fetch!(:request!)
+    assert 1 == :functions |> Monero.__info__() |> Keyword.fetch!(:request!)
   end
 end

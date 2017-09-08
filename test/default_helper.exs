@@ -1,5 +1,5 @@
 defmodule Test.JSONCodec do
-  @behaviour ExMonero.JSON.Codec
+  @behaviour Monero.JSON.Codec
 
   defdelegate encode!(data), to: Poison
   defdelegate encode(data), to: Poison

@@ -1,4 +1,4 @@
-defmodule ExMonero.Operation.Query do
+defmodule Monero.Operation.Query do
   @moduledoc """
   Datastructure representing an operation on a Monero Daemon endpoint
   """
@@ -7,21 +7,21 @@ defmodule ExMonero.Operation.Query do
     path: "/",
     data: %{},
     service: nil,
-    parser: &ExMonero.Utils.identity/2
+    parser: &Monero.Utils.identity/2
   ]
 
   @type t :: %__MODULE__{}
 end
 
-defimpl ExMonero.Operation, for: ExMonero.Operation.Query do
+defimpl Monero.Operation, for: Monero.Operation.Query do
   def perform(operation, config) do
-    url = ExMonero.Request.Url.build(operation, config)
+    url = Monero.Request.Url.build(operation, config)
 
     headers = [
       {"content-type", "application/json"},
     ]
 
-    result = ExMonero.Request.request(:post, url, operation.data, headers, config, operation.service)
+    result = Monero.Request.request(:post, url, operation.data, headers, config, operation.service)
     parser = operation.parser
 
     cond do

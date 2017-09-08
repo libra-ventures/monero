@@ -1,6 +1,6 @@
-defmodule ExMonero.Request.UrlTest do
+defmodule Monero.Request.UrlTest do
   use ExUnit.Case, async: true
-  alias ExMonero.Request.Url
+  alias Monero.Request.Url
 
   setup do
     query = %{

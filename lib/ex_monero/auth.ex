@@ -1,4 +1,4 @@
-defmodule ExMonero.Auth do
+defmodule Monero.Auth do
   @moduledoc "Authorization related functions"
 
   @doc "Add or replace HTTP Digest auth header in the list of supplied headers"

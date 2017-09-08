@@ -1,6 +1,6 @@
-defmodule ExMonero.WalletTest do
+defmodule Monero.WalletTest do
   use ExUnit.Case, async: true
-  alias ExMonero.Wallet
+  alias Monero.Wallet
 
   test "common settings endpoint" do
     assert %{path: "/json_rpc", service: :wallet} = Wallet.getbalance()
