@@ -1,5 +1,6 @@
 # ExMonero (NOT READY TO BE USED YET)
 [![Build Status](https://travis-ci.org/libra-ventures/ex_monero.svg?branch=master)](https://travis-ci.org/libra-ventures/ex_monero)
+[![Coverage Status](https://coveralls.io/repos/github/libra-ventures/ex_monero/badge.svg?branch=master)](https://coveralls.io/github/libra-ventures/ex_monero?branch=master)
 
 [Monero](https://getmonero.org) API client. Based on the fantastics [ExAws](https://github.com/CargoSense/ex_aws) project.
 

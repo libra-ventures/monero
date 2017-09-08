@@ -8,7 +8,9 @@ defmodule ExMonero.Mixfile do
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       elixirc_paths: elixirc_paths(Mix.env),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
   end
 
@@ -24,11 +26,13 @@ defmodule ExMonero.Mixfile do
 
   defp deps do
     [
-      {:hackney,  "~> 1.9",   optional: true},
-      {:jsx,      "~> 2.8",   optional: true},
-      {:poison,   ">= 3.0.0", optional: true},
-      {:dialyze,  "~> 0.2.0", only: :dev},
-      {:bypass,   "~> 0.7",   only: :test}
+      {:hackney,    "~> 1.9",   optional: true},
+      {:jsx,        "~> 2.8",   optional: true},
+      {:poison,     ">= 3.0.0", optional: true},
+      {:httpdigest, github: "nathanjohnson320/httpdigest", optional: true},
+      {:dialyze,    "~> 0.2.0", only: :dev},
+      {:bypass,     "~> 0.7",   only: :test},
+      {:excoveralls, "~> 0.7",  only: :test}
     ]
   end
 end
