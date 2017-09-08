@@ -2,7 +2,6 @@ defmodule ExMonero.RequestTest do
   use ExUnit.Case, async: true
   alias ExMonero.Request
   import Support.BypassHelpers
-  import Support.WalletHelpers
 
   describe "request/2" do
     setup do
@@ -18,7 +17,7 @@ defmodule ExMonero.RequestTest do
       Bypass.expect_once bypass, fn conn ->
         expected = "{\"params\":[912345],\"method\":\"on_getblockhash\",\"jsonrpc\":\"2.0\",\"id\":\"0\"}"
 
-        assert "/json-rpc" == conn.request_path
+        assert "/json_rpc" == conn.request_path
         assert "POST" == conn.method
         assert {:ok, ^expected, _} = Plug.Conn.read_body(conn)
         Plug.Conn.resp(conn, 200, "")
@@ -29,7 +28,7 @@ defmodule ExMonero.RequestTest do
 
     test "provides default data", %{config: config, url: url, bypass: bypass} do
       Bypass.expect_once bypass, fn conn ->
-        assert "/json-rpc" == conn.request_path
+        assert "/json_rpc" == conn.request_path
         assert "POST" == conn.method
         assert {:ok, "{}", _} = Plug.Conn.read_body(conn)
         Plug.Conn.resp(conn, 200, "")
@@ -53,10 +52,10 @@ defmodule ExMonero.RequestTest do
     test "attempts to authorize on 401 authorization required", %{config: config, url: url, bypass: bypass} do
       Agent.start_link(fn -> 0 end, [name: :bypass])
 
-      Bypass.expect bypass, "POST", "/json-rpc", fn conn ->
+      Bypass.expect bypass, "POST", "/json_rpc", fn conn ->
         case Agent.get(:bypass, & &1) do
           0 ->
-            refute authorization_header_present?(conn.req_headers)
+            refute header_present?(conn.req_headers, "authorization")
             Agent.update(:bypass, & &1 + 1)
             conn
             |> Plug.Conn.put_resp_header(
@@ -65,7 +64,7 @@ defmodule ExMonero.RequestTest do
             )
             |> Plug.Conn.resp(401, "")
           1 ->
-            assert authorization_header_present?(conn.req_headers)
+            assert header_present?(conn.req_headers, "authorization")
             Agent.update(:bypass, & &1 + 1)
             Plug.Conn.resp(conn, 200, "")
            _ -> assert false, "Should have finish on the second request!"
@@ -78,7 +77,7 @@ defmodule ExMonero.RequestTest do
     test "retries with backoff for client-side errors", %{config: config, url: url, bypass: bypass} do
       Agent.start_link(fn -> 0 end, [name: :bypass])
 
-      Bypass.expect bypass, "POST", "/json-rpc", fn conn ->
+      Bypass.expect bypass, "POST", "/json_rpc", fn conn ->
         code = if (Agent.get(:bypass, & &1) < 5), do: 422, else: 200
         Agent.update(:bypass, & &1 + 1)
         Plug.Conn.resp(conn, code, "")
@@ -91,7 +90,7 @@ defmodule ExMonero.RequestTest do
     test "retries with backoff for server-side errors", %{config: config, url: url, bypass: bypass} do
       Agent.start_link(fn -> 0 end, [name: :bypass])
 
-      Bypass.expect bypass, "POST", "/json-rpc", fn conn ->
+      Bypass.expect bypass, "POST", "/json_rpc", fn conn ->
         code = if (Agent.get(:bypass, & &1) < 5), do: 500, else: 200
         Agent.update(:bypass, & &1 + 1)
         Plug.Conn.resp(conn, code, "")
@@ -111,7 +110,4 @@ defmodule ExMonero.RequestTest do
       assert {:error, {:http_error, 500, "error"}} = Request.request(:post, url, [], [], config, :wallet)
     end
   end
-
-  defp authorization_header_present?(headers),
-    do: Enum.any?(headers, fn {name, _} -> String.downcase(name) =="authorization" end)
 end
