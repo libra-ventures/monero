@@ -10,7 +10,7 @@ defmodule ExMonero.Wallet do
   @doc "Return the wallet's balance."
   @spec getbalance() :: ExMonero.Operation.Query.t
   def getbalance() do
-    request(:getbalance)
+    request("getbalance")
   end
 
 
@@ -18,8 +18,6 @@ defmodule ExMonero.Wallet do
   ######################
 
   defp request(method, params \\ nil) do
-
-
     %ExMonero.Operation.Query {
       path: "/json_rpc",
       data: %{jsonrpc: "2.0", method: method, params: params},

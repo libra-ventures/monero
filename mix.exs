@@ -16,8 +16,7 @@ defmodule ExMonero.Mixfile do
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {ExMonero.Application, []}
+      extra_applications: [:logger]
     ]
   end
 

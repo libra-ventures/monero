@@ -33,7 +33,7 @@ defmodule ExMonero.Config do
     configuration_root = :ex_monero
     defaults = ExMonero.Config.Defaults.get(service)
     common_config =  configuration_root |> Application.get_all_env() |> Map.new() |> Map.take(@common_config)
-    service_config = configuration_root |> Application.get_env(, service, []) |> Map.new()
+    service_config = configuration_root |> Application.get_env(service, []) |> Map.new()
 
     defaults
     |> Map.merge(common_config)

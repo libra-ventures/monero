@@ -47,18 +47,4 @@ defmodule ExMonero do
           """
     end
   end
-
-  @doc """
-  Return a stream for the AWS resource.
-
-  ## Examples
-  ```
-  ExMonero.S3.list_objects("my-bucket") |> ExMonero.stream!
-  ```
-  """
-  @spec stream!(ExMonero.Operation.t) :: Enumerable.t
-  @spec stream!(ExMonero.Operation.t, Keyword.t) :: Enumerable.t
-  def stream!(op, config_overrides \\ []) do
-    ExMonero.Operation.stream!(op, ExMonero.Config.new(op.service, config_overrides))
-  end
 end
