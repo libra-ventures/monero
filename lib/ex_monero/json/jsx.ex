@@ -1,5 +1,5 @@
-defmodule ExMonero.JSON.JSX do
-  @behaviour ExMonero.JSON.Codec
+defmodule Monero.JSON.JSX do
+  @behaviour Monero.JSON.Codec
 
   @moduledoc false
 

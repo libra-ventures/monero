@@ -1,6 +1,6 @@
-# ExMonero (NOT READY TO BE USED YET)
-[![Build Status](https://travis-ci.org/libra-ventures/ex_monero.svg?branch=master)](https://travis-ci.org/libra-ventures/ex_monero)
-[![Coverage Status](https://coveralls.io/repos/github/libra-ventures/ex_monero/badge.svg?branch=master)](https://coveralls.io/github/libra-ventures/ex_monero?branch=master)
+# Monero (NOT READY TO BE USED YET)
+[![Build Status](https://travis-ci.org/libra-ventures/monero.svg?branch=master)](https://travis-ci.org/libra-ventures/monero)
+[![Coverage Status](https://coveralls.io/repos/github/libra-ventures/monero/badge.svg?branch=master)](https://coveralls.io/github/libra-ventures/monero?branch=master)
 
 [Monero](https://getmonero.org) API client. Based on the fantastics [ExAws](https://github.com/CargoSense/ex_aws) project.
 
@@ -8,13 +8,13 @@
 
 ### Setup
 
-Add `ex_monero` to your `mix.exs`, along with your json parser and http client of
-choice. ExMonero works out of the box with Poison and :hackney.
+Add `monero` to your `mix.exs`, along with your json parser and http client of
+choice. Monero works out of the box with Poison and :hackney.
 
 ```elixir
 def deps do
   [
-    {:ex_monero, "~> 1.0"},
+    {:monero, "~> 1.0"},
     {:poison, "~> 2.0"},
     {:hackney, "~> 1.6"}
   ]
@@ -22,7 +22,7 @@ end
 ```
 ### Usage
 
-ExMonero inherits data driven approach to querying APIs. The various
+Monero inherits data driven approach to querying APIs. The various
 functions that exist inside a service like `Wallet.getbalance()` or
 `Daemon.getheight()` all return a struct which holds the information necessary
 to make that particular operation.
@@ -31,23 +31,23 @@ You then have 4 ways you can choose to execute that operation:
 
 ```elixir
 # Simple
-Wallet.getbalance() |> ExMonero.request() #=> {:ok, response}
+Wallet.getbalance() |> Monero.request() #=> {:ok, response}
 # With per request configuration overrides
-Wallet.getbalance() |> ExMonero.request(config) #=> {:ok, response}
+Wallet.getbalance() |> Monero.request(config) #=> {:ok, response}
 
 # Raise on error, return successful responses directly
-Wallet.getbalance() |> ExMonero.request!() #=> response
-Wallet.getbalance() |> ExMonero.request!(config) #=> response
+Wallet.getbalance() |> Monero.request!() #=> response
+Wallet.getbalance() |> Monero.request!(config) #=> response
 ```
 
 _Note: Daemon service is not implemented yet_
 
 ### Authorization
 
-ExMonero has by default the equivalent including the following in your mix.exs
+Monero has by default the equivalent including the following in your mix.exs
 
 ```elixir
-config :ex_monero,
+config :monero,
   wallet: %{
     wallet: %{
       url: {:system, "MONERO_WALLET_RPC_URL"},
@@ -58,11 +58,11 @@ config :ex_monero,
 ```
 
 This means values from  `MONERO_WALLET_RPC_URL`, `MONERO_WALLET_RPC_USER` and `MONERO_WALLET_RPC_PASSWORD` environment
-variables have higher precedence over `:ex_monero` configuration settings
+variables have higher precedence over `:monero` configuration settings
 
 ### Retries
 
-ExMonero will retry failed requests using exponential backoff per the "Full
+Monero will retry failed requests using exponential backoff per the "Full
 Jitter" formula described in
 https://www.awsarchitectureblog.com/2015/03/backoff.html
 
@@ -71,7 +71,7 @@ The algorithm uses three values, which are configurable:
 ```elixir
 # default values shown below
 
-config :ex_monero, :retries,
+config :monero, :retries,
   max_attempts: 10,
   base_backoff_in_ms: 10,
   max_backoff_in_ms: 10_000

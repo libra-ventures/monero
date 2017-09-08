@@ -1,8 +1,8 @@
-defmodule ExMonero.Request.HttpClient do
+defmodule Monero.Request.HttpClient do
   @moduledoc """
   Specifies expected behaviour of an http client
 
-  ExMonero allows you to use your http client of choice, provided that
+  Monero allows you to use your http client of choice, provided that
   it can be coerced into complying with this module's specification.
 
   The default is :hackney.
@@ -14,12 +14,12 @@ defmodule ExMonero.Request.HttpClient do
 
   ```elixir
   config :ex_aws,
-    http_client: ExMonero.Request.HTTPotion
+    http_client: Monero.Request.HTTPotion
   ```
 
   ```elixir
-  defmodule ExMonero.Request.HTTPotion do
-    @behaviour ExMonero.Request.HttpClient
+  defmodule Monero.Request.HTTPotion do
+    @behaviour Monero.Request.HttpClient
     def request(method, url, body, headers) do
       {:ok, HTTPotion.request(method, url, [body: body, headers: headers, ibrowse: [headers_as_is: true]])}
     end

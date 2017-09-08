@@ -7,7 +7,7 @@ defmodule Support.BypassHelpers do
   end
 
   def service_config_for_bypass(bypass, service \\ :wallet) do
-    ExMonero.Config.new(service, [
+    Monero.Config.new(service, [
       user: "user",
       password: "password",
       url: "http://localhost:#{bypass.port}"

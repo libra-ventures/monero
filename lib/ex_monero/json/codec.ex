@@ -1,24 +1,24 @@
-defmodule ExMonero.JSON.Codec do
+defmodule Monero.JSON.Codec do
   @moduledoc """
   Defines the specification for a JSON codec.
 
-  ExMonero supports the use of your favorite JSON codec provided it fulfills this specification.
+  Monero supports the use of your favorite JSON codec provided it fulfills this specification.
   Poison fulfills this spec without modification, and is the default.
 
-  See the contents of `ExMonero.JSON.JSX` for an example of an alternative implementation.
+  See the contents of `Monero.JSON.JSX` for an example of an alternative implementation.
   ## Example
   Here for example is the code required to make jsx comply with this spec.
 
   In your config you would do:
 
   ```elixir
-  config :ex_monero,
-    json_codec: ExMonero.JSON.JSX
+  config :monero,
+    json_codec: Monero.JSON.JSX
   ```
 
   ```elixir
-  defmodule ExMonero.JSON.JSX do
-    @behaviour ExMonero.JSON.Codec
+  defmodule Monero.JSON.JSX do
+    @behaviour Monero.JSON.Codec
 
     @moduledoc false
 

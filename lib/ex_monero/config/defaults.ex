@@ -1,10 +1,10 @@
-defmodule ExMonero.Config.Defaults do
+defmodule Monero.Config.Defaults do
   @moduledoc """
   Defaults for each service
   """
 
   @common %{
-    http_client: ExMonero.Request.Hackney,
+    http_client: Monero.Request.Hackney,
     json_codec: Poison,
     retries: [
       max_attempts: 10,

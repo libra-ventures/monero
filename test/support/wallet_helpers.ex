@@ -4,7 +4,7 @@ defmodule Support.WalletHelpers do
   def service_config(overrides \\ %{}) do
     config = %{
       debug_requests: true,
-      http_client: ExMonero.Request.Hackney,
+      http_client: Monero.Request.Hackney,
       json_codec: Poison,
       password: "password",
       retries: [max_attempts: 10, base_backoff_in_ms: 10, max_backoff_in_ms: 10_000],

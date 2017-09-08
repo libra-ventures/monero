@@ -1,4 +1,4 @@
-defmodule ExMonero do
+defmodule Monero do
   @doc """
   Perform an AWS request
 
@@ -12,18 +12,18 @@ defmodule ExMonero do
   ## Examples
 
   ```
-  ExMonero.S3.list_buckets |> ExMonero.request
+  Monero.S3.list_buckets |> Monero.request
 
-  ExMonero.S3.list_buckets |> ExMonero.request(region: "eu-west-1")
+  Monero.S3.list_buckets |> Monero.request(region: "eu-west-1")
 
-  ExMonero.Dynamo.get_object("users", "foo@bar.com") |> ExMonero.request
+  Monero.Dynamo.get_object("users", "foo@bar.com") |> Monero.request
   ```
 
   """
-  @spec request(ExMonero.Operation.t) :: term
-  @spec request(ExMonero.Operation.t, Keyword.t) :: {:ok, term} | {:error, term}
+  @spec request(Monero.Operation.t) :: term
+  @spec request(Monero.Operation.t, Keyword.t) :: {:ok, term} | {:error, term}
   def request(op, config_overrides \\ []) do
-    ExMonero.Operation.perform(op, ExMonero.Config.new(op.service, config_overrides))
+    Monero.Operation.perform(op, Monero.Config.new(op.service, config_overrides))
   end
 
   @doc """
@@ -32,16 +32,16 @@ defmodule ExMonero do
   Same as `request/1,2` except it will either return the successful response from
   AWS or raise an exception.
   """
-  @spec request!(ExMonero.Operation.t) :: term | no_return
-  @spec request!(ExMonero.Operation.t, Keyword.t) :: term | no_return
+  @spec request!(Monero.Operation.t) :: term | no_return
+  @spec request!(Monero.Operation.t, Keyword.t) :: term | no_return
   def request!(op, config_overrides \\ []) do
     case request(op, config_overrides) do
       {:ok, result} ->
         result
 
       error ->
-        raise ExMonero.Error, """
-          ExMonero Request Error!
+        raise Monero.Error, """
+          Monero Request Error!
 
           #{inspect error}
           """

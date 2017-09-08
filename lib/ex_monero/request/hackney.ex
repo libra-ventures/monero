@@ -1,5 +1,5 @@
-defmodule ExMonero.Request.Hackney do
-  @behaviour ExMonero.Request.HttpClient
+defmodule Monero.Request.Hackney do
+  @behaviour Monero.Request.HttpClient
 
   @moduledoc """
   Configuration for :hackney

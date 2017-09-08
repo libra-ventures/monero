@@ -1,4 +1,4 @@
-defmodule ExMonero.Request.Url do
+defmodule Monero.Request.Url do
   @moduledoc false
 
   @doc """

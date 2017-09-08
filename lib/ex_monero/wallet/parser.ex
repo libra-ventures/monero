@@ -1,4 +1,4 @@
-  defmodule ExMonero.Wallet.Parser do
+  defmodule Monero.Wallet.Parser do
     @moduledoc "Wallet daemon response parser"
 
     def parse({:error, result}, _), do: {:error, result}

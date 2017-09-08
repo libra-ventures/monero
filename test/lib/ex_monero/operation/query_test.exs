@@ -1,4 +1,4 @@
-defmodule ExMonero.Operation.QueryTest do
+defmodule Monero.Operation.QueryTest do
   use ExUnit.Case, async: true
   import Support.BypassHelpers
 
@@ -6,13 +6,13 @@ defmodule ExMonero.Operation.QueryTest do
     setup do
       bypass = Bypass.open()
       config = service_config_for_bypass(bypass)
-      operation = %ExMonero.Operation.Query {
+      operation = %Monero.Operation.Query {
         path: "/json_rpc",
         data: %{jsonrpc: "2.0", method: :getbalance, params: ""},
         service: :wallet,
         parser: fn status, result ->
           send(self(), :parser_called)
-          ExMonero.Wallet.Parser.parse(status, result)
+          Monero.Wallet.Parser.parse(status, result)
         end
       }
 
@@ -26,7 +26,7 @@ defmodule ExMonero.Operation.QueryTest do
         Plug.Conn.resp(conn, 200, ~s<{"id": "0","jsonrpc": "2.0","result" :{"count": 993163,"status": "OK"}}>)
       end
 
-      assert {:ok, %{"count" => 993_163, "status" => "OK"}} = ExMonero.Operation.perform(op, config)
+      assert {:ok, %{"count" => 993_163, "status" => "OK"}} = Monero.Operation.perform(op, config)
       assert_receive :parser_called
     end
   end

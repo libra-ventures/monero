@@ -1,6 +1,6 @@
-defmodule ExMonero.AuthTest do
+defmodule Monero.AuthTest do
   use ExUnit.Case, async: true
-  alias ExMonero.Auth
+  alias Monero.Auth
   import Support.WalletHelpers
 
   setup do

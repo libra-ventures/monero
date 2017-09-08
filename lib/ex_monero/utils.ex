@@ -1,4 +1,4 @@
-defmodule ExMonero.Utils do
+defmodule Monero.Utils do
   @moduledoc false
 
   def identity(x), do: x
