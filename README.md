@@ -6,6 +6,8 @@
 
 ## Getting started
 
+### Setup
+
 Add `ex_monero` to your `mix.exs`, along with your json parser and http client of
 choice. ExMonero works out of the box with Poison and :hackney.
 
@@ -18,6 +20,29 @@ def deps do
   ]
 end
 ```
+### Usage
+
+ExMonero inherits data driven approach to querying APIs. The various
+functions that exist inside a service like `Wallet.getbalance()` or
+`Daemon.getheight()` all return a struct which holds the information necessary
+to make that particular operation.
+
+You then have 4 ways you can choose to execute that operation:
+
+```elixir
+# Simple
+Wallet.getbalance() |> ExMonero.request() #=> {:ok, response}
+# With per request configuration overrides
+Wallet.getbalance() |> ExMonero.request(config) #=> {:ok, response}
+
+# Raise on error, return successful responses directly
+Wallet.getbalance() |> ExMonero.request!() #=> response
+Wallet.getbalance() |> ExMonero.request!(config) #=> response
+```
+
+_Note: Daemon service is not implemented yet_
+
+### Authorization
 
 ExMonero has by default the equivalent including the following in your mix.exs
 
@@ -35,7 +60,7 @@ config :ex_monero,
 This means values from  `MONERO_WALLET_RPC_URL`, `MONERO_WALLET_RPC_USER` and `MONERO_WALLET_RPC_PASSWORD` environment
 variables have higher precedence over `:ex_monero` configuration settings
 
-## Retries
+### Retries
 
 ExMonero will retry failed requests using exponential backoff per the "Full
 Jitter" formula described in
