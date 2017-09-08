@@ -13,6 +13,6 @@ defmodule ExMonero.Request.Url do
   end
 
   defp normalize_path(url) do
-    url |> Map.update(:path, "", &String.replace(&1, ~r/\/{2,}/, "/"))
+    Map.update(url, :path, "", &String.replace(&1, ~r/\/{2,}/, "/"))
   end
 end

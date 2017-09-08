@@ -8,7 +8,7 @@ defmodule ExMonero.RequestTest do
       bypass = Bypass.open()
       config = service_config_for_bypass(bypass)
       url = bypass_endpoint_url(bypass.port)
-      data = %{jsonrpc: "2.0", id: "0", method: "on_getblockhash", params: [912345]}
+      data = %{jsonrpc: "2.0", id: "0", method: "on_getblockhash", params: [912_345]}
 
       {:ok, bypass: bypass, config: config, url: url, data: data}
     end
@@ -78,7 +78,7 @@ defmodule ExMonero.RequestTest do
       Agent.start_link(fn -> 0 end, [name: :bypass])
 
       Bypass.expect bypass, "POST", "/json_rpc", fn conn ->
-        code = if (Agent.get(:bypass, & &1) < 5), do: 422, else: 200
+        code = if Agent.get(:bypass, & &1) < 5, do: 422, else: 200
         Agent.update(:bypass, & &1 + 1)
         Plug.Conn.resp(conn, code, "")
       end
@@ -91,7 +91,7 @@ defmodule ExMonero.RequestTest do
       Agent.start_link(fn -> 0 end, [name: :bypass])
 
       Bypass.expect bypass, "POST", "/json_rpc", fn conn ->
-        code = if (Agent.get(:bypass, & &1) < 5), do: 500, else: 200
+        code = if Agent.get(:bypass, & &1) < 5, do: 500, else: 200
         Agent.update(:bypass, & &1 + 1)
         Plug.Conn.resp(conn, code, "")
       end

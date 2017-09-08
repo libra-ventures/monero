@@ -18,7 +18,7 @@ defmodule ExMonero.Request.UrlTest do
   end
 
   test "it cleans up excessive slashes in the path", %{query: query, config: config} do
-    query = query |> Map.put(:path, "//path///with/too/many//slashes//")
+    query = Map.put(query, :path, "//path///with/too/many//slashes//")
     assert Url.build(query, config) == "http://127.0.0.1:18081/path/with/too/many/slashes/"
   end
 end

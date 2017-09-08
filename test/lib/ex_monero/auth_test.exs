@@ -12,11 +12,11 @@ defmodule ExMonero.AuthTest do
       type_header = List.first(request_headers())
       {:ok, headers} = Auth.headers(method, url, service_config(), response_headers(), [type_header])
 
-      assert [{"Authorization", "Digest" <> _rest}, ^type_header ] = headers
+      assert [{"Authorization", "Digest" <> _rest}, ^type_header] = headers
     end
 
     test "replaces digest auth header in the list of the headers", %{method: method, url: url} do
-      diges_header  = {"Authorization","XDigest cnonce=\"d5c3d965\",nc=00000001"}
+      diges_header  = {"Authorization", "XDigest cnonce=\"d5c3d965\",nc=00000001"}
       {:ok, headers} = Auth.headers(method, url, service_config(), response_headers(), [diges_header])
 
       assert [{"Authorization", "Digest" <> _rest}] = headers

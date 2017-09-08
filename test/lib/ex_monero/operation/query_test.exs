@@ -26,7 +26,7 @@ defmodule ExMonero.Operation.QueryTest do
         Plug.Conn.resp(conn, 200, ~s<{"id": "0","jsonrpc": "2.0","result" :{"count": 993163,"status": "OK"}}>)
       end
 
-      assert {:ok, %{"count" => 993163, "status" => "OK"}} = ExMonero.Operation.perform(op, config)
+      assert {:ok, %{"count" => 993_163, "status" => "OK"}} = ExMonero.Operation.perform(op, config)
       assert_receive :parser_called
     end
   end

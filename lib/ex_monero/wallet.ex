@@ -13,7 +13,6 @@ defmodule ExMonero.Wallet do
     request("getbalance")
   end
 
-
   ## Request
   ######################
 

@@ -1,15 +1,18 @@
 defmodule Support.WalletHelpers do
+  @moduledoc false
+
   def service_config(overrides \\ %{}) do
-    %{
+    config = %{
       debug_requests: true,
       http_client: ExMonero.Request.Hackney,
       json_codec: Poison,
       password: "password",
-      retries: [max_attempts: 10, base_backoff_in_ms: 10, max_backoff_in_ms: 10000],
+      retries: [max_attempts: 10, base_backoff_in_ms: 10, max_backoff_in_ms: 10_000],
       url: "http://127.0.0.1:18081",
       user: "user"
     }
-    |> Map.merge(overrides)
+
+    Map.merge(config, overrides)
   end
 
   def response_headers() do

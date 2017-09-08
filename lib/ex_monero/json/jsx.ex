@@ -5,7 +5,7 @@ defmodule ExMonero.JSON.JSX do
 
   if Code.ensure_loaded?(:jsx) do
     def encode!(%{} = map) do
-      map |> :jsx.encode
+      :jsx.encode(map )
     end
 
     def decode!(string) do

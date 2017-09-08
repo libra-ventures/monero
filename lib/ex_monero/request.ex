@@ -27,9 +27,13 @@ defmodule ExMonero.Request do
     url = replace_spaces(url)
 
     if config[:debug_requests] do
-      Logger.debug("Request URL: #{inspect url}")
-      Logger.debug("Request HEADERS: #{inspect headers}")
-      Logger.debug("Request BODY: #{inspect req_body}")
+      Logger.debug fn ->
+        """
+        Request URL: #{inspect url}"
+        Request HEADERS: #{inspect headers}
+        Request BODY: #{inspect req_body}"
+        """
+      end
     end
 
     case config[:http_client].request(method, url, req_body, headers, Map.get(config, :http_opts, [])) do
@@ -68,7 +72,7 @@ defmodule ExMonero.Request do
     if attempt >= config[:retries][:max_attempts] do
       {:error, reason}
     else
-      attempt |> backoff(config)
+      backoff(attempt, config)
       {:attempt, attempt + 1}
     end
   end
