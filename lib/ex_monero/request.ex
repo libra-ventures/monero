@@ -44,6 +44,13 @@ defmodule ExMonero.Request do
             end
           {:error, reason} -> {:error, reason}
         end
+      {:ok, %{status_code: status} = resp} when status in 400..499 ->
+        reason = client_error(resp)
+        case  attempt_again?(attempt, reason, config) do
+          {:attempt, reason} ->
+            request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
+          {:error, reason} -> {:error, reason}
+        end
       {:ok, %{status_code: status, body: body}} when status >= 500 ->
         reason = {:http_error, status, body}
         request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
