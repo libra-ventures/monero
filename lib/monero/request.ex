@@ -2,7 +2,7 @@ defmodule Monero.Request do
   require Logger
 
   @moduledoc """
-  Makes requests to Monero backend.
+  Makes requests to Monero backend and attempts to retry if needed
   """
 
   @type http_status :: pos_integer
@@ -11,6 +11,7 @@ defmodule Monero.Request do
   @type error_t :: {:error, {:http_error, http_status, binary}}
   @type response_t :: success_t | error_t
 
+  @doc "Fire a request. Not inteded to be called by the user, see `Monero.request`"
   def request(http_method, url, data, headers, config, service) do
     body = case data do
       []  -> "{}"

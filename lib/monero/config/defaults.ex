@@ -1,6 +1,6 @@
 defmodule Monero.Config.Defaults do
   @moduledoc """
-  Defaults for each service
+  Common defaults and defaults for each of the services
   """
 
   @common %{

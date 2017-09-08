@@ -15,6 +15,10 @@ defmodule Monero.Mixfile do
       description: "Monero client. Currently supports Wallet RPC API",
       name: "Monero",
       source_url: "https://github.com/libra-ventures/monero",
+      docs: [
+        main: "Monero",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -29,13 +33,14 @@ defmodule Monero.Mixfile do
 
   defp deps do
     [
-      {:hackney,    "~> 1.9",   optional: true},
-      {:jsx,        "~> 2.8",   optional: true},
-      {:poison,     ">= 3.0.0", optional: true},
-      {:httpdigest, github: "nathanjohnson320/httpdigest", optional: true},
-      {:dialyze,    "~> 0.2.0", only: :dev},
-      {:bypass,     "~> 0.7",   only: :test},
-      {:excoveralls, "~> 0.7",  only: :test}
+      {:hackney,      "~> 1.9",   optional: true},
+      {:jsx,          "~> 2.8",   optional: true},
+      {:poison,       ">= 3.0.0", optional: true},
+      {:httpdigest,   github: "nathanjohnson320/httpdigest", optional: true},
+      {:ex_doc,       "~> 0.16",  only: :dev, runtime: false},
+      {:dialyze,      "~> 0.2.0", only: :dev},
+      {:bypass,       "~> 0.7",   only: :test},
+      {:excoveralls,  "~> 0.7",   only: :test}
     ]
   end
 
