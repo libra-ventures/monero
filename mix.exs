@@ -36,7 +36,7 @@ defmodule Monero.Mixfile do
       {:hackney,      "~> 1.9",   optional: true},
       {:jsx,          "~> 2.8",   optional: true},
       {:poison,       ">= 3.0.0", optional: true},
-      {:httpdigest,   github: "nathanjohnson320/httpdigest", optional: true},
+      {:httpdigest,   "~> 0.0.1", optional: true},
       {:ex_doc,       "~> 0.16",  only: :dev, runtime: false},
       {:dialyze,      "~> 0.2.0", only: :dev},
       {:bypass,       "~> 0.7",   only: :test},
