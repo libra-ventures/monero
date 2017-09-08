@@ -7,7 +7,6 @@ defmodule ExMonero.Operation.Query do
     path: "/",
     data: %{},
     service: nil,
-    action: nil,
     parser: &ExMonero.Utils.identity/2
   ]
 
