@@ -16,15 +16,15 @@ end
 
 defimpl ExMonero.Operation, for: ExMonero.Operation.Query do
   def perform(operation, config) do
-    url = operation
-    |> Map.delete(:params)
-    |> ExMonero.Request.Url.build(config)
+    url = ExMonero.Request.Url.build(operation, config)
+
     headers = [
       {"content-type", "application/json"},
     ]
 
     result = ExMonero.Request.request(:post, url, operation.data, headers, config, operation.service)
     parser = operation.parser
+
     cond do
       is_function(parser, 2) ->
         parser.(result, config)
