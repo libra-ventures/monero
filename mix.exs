@@ -4,13 +4,17 @@ defmodule Monero.Mixfile do
   def project do
     [
       app: :monero,
-      version: "0.1.0",
+      version: version(),
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       elixirc_paths: elixirc_paths(Mix.env),
+      package: package(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+      description: "Monero client. Currently supports Wallet RPC API",
+      name: "Monero",
+      source_url: "https://github.com/libra-ventures/monero",
     ]
   end
 
@@ -32,6 +36,17 @@ defmodule Monero.Mixfile do
       {:dialyze,    "~> 0.2.0", only: :dev},
       {:bypass,     "~> 0.7",   only: :test},
       {:excoveralls, "~> 0.7",  only: :test}
+    ]
+  end
+
+  defp version(), do: "1.0.0-rc0"
+
+  defp package() do
+    [
+      files: ["lib", "config", "mix.exs", "README*"],
+      maintainers: ["Yevhenii Kurtov"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/libra-ventures/monero"}
     ]
   end
 end
