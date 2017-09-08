@@ -90,7 +90,7 @@ config :monero, :retries,
 
 ```
 monero-wallet-cli --testnet --daemon-host node.xmrbackb.one --generate-new-wallet ~/wallets/xb-testnet
-monero-wallet-rpc  --daemon-host node.xmrbackb.one  --testnet --wallet-file wallets/xb-testnet --rpc-bind-port 18081 --rpc-bind-ip 127.0.0.1 --rpc-login user:password
+monero-wallet-rpc --daemon-host node.xmrbackb.one --testnet --wallet-file wallets/xb-testnet --rpc-bind-port 18081 --rpc-bind-ip 127.0.0.1 --rpc-login user:password
 ```
 
 Have fun!

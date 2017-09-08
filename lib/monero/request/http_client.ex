@@ -13,7 +13,7 @@ defmodule Monero.Request.HttpClient do
   In your config you would do:
 
   ```elixir
-  config :ex_aws,
+  config :monero,
     http_client: Monero.Request.HTTPotion
   ```
 

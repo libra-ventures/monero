@@ -6,7 +6,7 @@ defmodule Monero.Request.Hackney do
 
   Options can be set for :hackney with the following config:
 
-      config :ex_aws, :hackney_opts,
+      config :monero, :hackney_opts,
         recv_timeout: 30_000
 
   The default config handles setting the above
@@ -15,7 +15,7 @@ defmodule Monero.Request.Hackney do
   @default_opts [recv_timeout: 30_000]
 
   def request(method, url, body \\ "", headers \\ [], http_opts \\ []) do
-    opts = Application.get_env(:ex_aws, :hackney_opts, @default_opts)
+    opts = Application.get_env(:monero, :hackney_opts, @default_opts)
     opts = http_opts ++ [:with_body | opts]
     case :hackney.request(method, url, headers, body, opts) do
       {:ok, status, headers} ->
