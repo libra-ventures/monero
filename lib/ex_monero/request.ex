@@ -2,7 +2,7 @@ defmodule ExMonero.Request do
   require Logger
 
   @moduledoc """
-  Makes requests to AWS.
+  Makes requests to Monero backend.
   """
 
   @type http_status :: pos_integer
@@ -21,9 +21,9 @@ defmodule ExMonero.Request do
     request_and_retry(http_method, url, service, config, headers, body, {:attempt, 1})
   end
 
-  def request_and_retry(_method, _url, _service, _config, _headers, _req_body, {:error, reason}), do: {:error, reason}
+  defp request_and_retry(_method, _url, _service, _config, _headers, _req_body, {:error, reason}), do: {:error, reason}
 
-  def request_and_retry(method, url, service, config, headers, req_body, {:attempt, attempt}) do
+  defp request_and_retry(method, url, service, config, headers, req_body, {:attempt, attempt}) do
     url = replace_spaces(url)
 
     if config[:debug_requests] do
@@ -53,11 +53,11 @@ defmodule ExMonero.Request do
     end
   end
 
-  def client_error(%{status_code: status} = error) do
+  defp client_error(%{status_code: status} = error) do
     {:http_error, status, error}
   end
 
-  def attempt_again?(attempt, reason, config) do
+  defp attempt_again?(attempt, reason, config) do
     if attempt >= config[:retries][:max_attempts] do
       {:error, reason}
     else
@@ -66,7 +66,7 @@ defmodule ExMonero.Request do
     end
   end
 
-  def backoff(attempt, config) do
+  defp backoff(attempt, config) do
     (config[:retries][:base_backoff_in_ms] * :math.pow(2, attempt))
     |> min(config[:retries][:max_backoff_in_ms])
     |> trunc
