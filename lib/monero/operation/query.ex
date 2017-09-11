@@ -4,6 +4,7 @@ defmodule Monero.Operation.Query do
   """
 
   defstruct [
+    action: nil,
     path: "/",
     data: %{},
     service: nil,
