@@ -40,8 +40,6 @@ Wallet.getbalance() |> Monero.request!() #=> response
 Wallet.getbalance() |> Monero.request!(config) #=> response
 ```
 
-_Note: Daemon service is not implemented yet_
-
 ### Authorization
 
 Monero has by default the equivalent including the following in your mix.exs
