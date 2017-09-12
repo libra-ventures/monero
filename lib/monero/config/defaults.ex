@@ -18,6 +18,12 @@ defmodule Monero.Config.Defaults do
       url: {:system, "MONERO_WALLET_RPC_URL"},
       user: {:system, "MONERO_WALLET_RPC_USER"},
       password: {:system, "MONERO_WALLET_RPC_PASSWORD"}
+    },
+
+    daemon: %{
+      url: {:system, "MONERO_DAEMON_RPC_URL"},
+      user: {:system, "MONERO_DAEMON_RPC_USER"},
+      password: {:system, "MONERO_DAEMON_RPC_PASSWORD"}
     }
   }
 
