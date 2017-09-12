@@ -1,3 +1,11 @@
+### Monero 0.9.1
+
+Added:
+
+  - `Daemon` service with following calls
+    - `get_fee_estimate`
+    - `getheight`
+
 ### Monero v0.9.0
 
 Using ExAws as a foundation allowed us to inherit following features for free:
