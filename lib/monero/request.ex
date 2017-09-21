@@ -39,7 +39,7 @@ defmodule Monero.Request do
              {:ok, full_headers} <- Monero.Auth.headers(method, url, config, resp_headers, headers),
              do: request_and_retry(method, url, service, config, full_headers, req_body, {:attempt, attempt})
 
-      {:ok, %{status_code: status} = resp} when status in 400..499 and status != 401 ->
+      {:ok, %{status_code: status} = resp} when status in 400..499 ->
         reason = client_error(resp)
         request_and_retry(method, url, service, config, headers, req_body, attempt_again?(attempt, reason, config))
 

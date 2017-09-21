@@ -31,8 +31,10 @@ defmodule Monero.Wallet do
   Return a list of incoming transfers to the wallet.
 
   Args:
-  * `transfer_type` - `"all"` for all the transfers, `"available"` for only transfers
-  which are not yet spent, or `"unavailable"` for only transfers which are already spent.
+  * `transfer_type` - may be one of the:
+    * `"all"` - for all the transfers.
+    * `"available"` - for only transfers which are not yet spent.
+    * `"unavailable"` - for only transfers which are already spent.
   """
   @spec incoming_transfers(Strint.t) :: Monero.Operation.Query.t
   def incoming_transfers(transfer_type) do
@@ -40,11 +42,11 @@ defmodule Monero.Wallet do
   end
 
   @doc """
-  Create a new wallet. You need to have set the argument `–wallet-dir` when
+  Create a new wallet. You need to have set the argument `--wallet-dir` when
   launching monero-wallet-rpc to make this work.
 
   Args:
-  * `filename` - Filename for your wallet
+  * `filename` - Filename for your wallet.
   * `password` - Password for your wallet.
   * `language` - Language for your wallets' seed.
   """
@@ -54,11 +56,11 @@ defmodule Monero.Wallet do
   end
 
   @doc """
-  Open a wallet. You need to have set the argument `–wallet-dir` when
+  Open a wallet. You need to have set the argument `--wallet-dir` when
   launching monero-wallet-rpc to make this work.
 
   Args:
-  * `filename` - Filename for your wallet
+  * `filename` - Filename for your wallet.
   * `password` - Password for your wallet.
   """
   @spec open_wallet(Strint.t, Strint.t) :: Monero.Operation.Query.t
