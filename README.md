@@ -45,14 +45,10 @@ Wallet.getbalance() |> Monero.request!(config) #=> response
 Monero has by default the equivalent including the following in your mix.exs
 
 ```elixir
-config :monero,
-  wallet: %{
-    wallet: %{
-      url: {:system, "MONERO_WALLET_RPC_URL"},
-      user: {:system, "MONERO_WALLET_RPC_USER"},
-      pasword: {:system, "MONERO_WALLET_RPC_PASSWORD"}
-    }
-  }
+config :monero, wallet:
+  url: {:system, "MONERO_WALLET_RPC_URL"},
+  user: {:system, "MONERO_WALLET_RPC_USER"},
+  password: {:system, "MONERO_WALLET_RPC_PASSWORD"}
 ```
 
 This means values from  `MONERO_WALLET_RPC_URL`, `MONERO_WALLET_RPC_USER` and `MONERO_WALLET_RPC_PASSWORD` environment
