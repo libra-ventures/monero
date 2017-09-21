@@ -6,7 +6,12 @@
     def parse({:ok, %{body: ""}}, _, _), do: {:ok, %{}}
 
     def parse({:ok, %{body: body}}, action, config) when action == "json_rpc" do
-      {:ok, config[:json_codec].decode!(body)["result"]}
+      parsed_body = config[:json_codec].decode!(body)
+
+      case parsed_body["result"] do
+        nil -> {:error, parsed_body["error"]}
+        result -> {:ok, result}
+      end
     end
 
     def parse({:ok, %{body: body}}, _, config) do
