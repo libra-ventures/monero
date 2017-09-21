@@ -13,6 +13,13 @@ defmodule Monero.Daemon.ParserTest do
     assert Parser.parse({:ok, %{body: body}}, "json_rpc", [json_codec: Test.JSONCodec]) == expected
   end
 
+  test "json rpc calls parsing without result in the body" do
+    body = ~s<{"error": {"code": -32601, "message": "Method not found"}, "id": "0", "jsonrpc": "2.0"}>
+    expected = {:error, %{"code" => -32_601, "message" => "Method not found"}}
+
+    assert Parser.parse({:ok, %{body: body}}, "json_rpc", [json_codec: Test.JSONCodec]) == expected
+  end
+
   test "rest calls parsing" do
     body = ~s<{"height": 993488,"status": "OK"}>
     expected = {:ok, %{"height" => 993_488, "status" => "OK"}}
