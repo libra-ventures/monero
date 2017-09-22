@@ -68,6 +68,35 @@ defmodule Monero.Wallet do
     request("open_wallet", %{filename: filename, password: password})
   end
 
+  @type transfer_destination :: %{amount: String.t, address: String.t}
+
+  @type transfer_opts :: {:payment_id, String.t}
+    | {:get_tx_key, boolean}
+    | {:priority, non_neg_integer}
+    | {:do_not_relay, boolean}
+    | {:get_tx_hex, boolean}
+
+  @doc """
+  Send monero to a number of recipients.
+
+  Args:
+  * `destinations` - List of destinations to receive XMR.
+  * `mixin` - Number of outputs from the blockchain to mix with.
+  * `unlock_time` - Number of blocks before the monero can be spent (0 to not add a lock)
+  * optional arguments in a form of keyword list as described in the documentation
+
+  **NOTE:** destination amount is in atomic units, means 1e12 = 1 XMR
+  """
+  @spec transfer([transfer_destination], non_neg_integer, non_neg_integer, transfer_opts) :: Monero.Operation.Query.t
+  def transfer(destinations, mixin, unlock_time, opts \\ []) do
+    params =
+      opts
+      |> build_opts([:payment_id, :get_tx_key, :priority, :do_not_relay, :get_tx_hex])
+      |> Map.merge(%{destinations: destinations, mixin: mixin, unlock_time: unlock_time})
+
+    request("transfer", params)
+  end
+
   ## Request
   ######################
 
@@ -79,4 +108,9 @@ defmodule Monero.Wallet do
       parser: &Monero.Wallet.Parser.parse/2
     }
   end
+
+  ## Utils
+  ######################
+
+  defp build_opts(opts, permitted), do: opts |> Map.new() |> Map.take(permitted)
 end

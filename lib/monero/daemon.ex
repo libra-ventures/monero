@@ -16,6 +16,17 @@ defmodule Monero.Daemon do
     request("getheight")
   end
 
+  @doc """
+  Broadcast a raw transaction to the network.
+
+  Args:
+  * `tx_hex` - Full transaction information as hexidecimal string.
+  """
+  @spec sendrawtransaction(String.t) :: Monero.Operation.Query.t
+  def sendrawtransaction(tx_hex) do
+    request("sendrawtransaction", %{tx_as_hex: tx_hex})
+  end
+
   ## Request
   ######################
 
