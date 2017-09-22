@@ -68,7 +68,6 @@ defmodule Monero.Wallet do
     request("open_wallet", %{filename: filename, password: password})
   end
 
-
   @type transfer_destination :: %{amount: String.t, address: String.t}
 
   @type transfer_opts :: {:payment_id, String.t}
@@ -98,10 +97,10 @@ defmodule Monero.Wallet do
   """
   @spec transfer([transfer_destination], non_neg_integer, non_neg_integer, transfer_opts) :: Monero.Operation.Query.t
   def transfer(destinations, mixin, unlock_time, opts \\ []) do
-    opts_map = build_opts(opts, [:payment_id, :get_tx_key, :priority, :do_not_relay, :get_tx_hex])
     params =
-      %{destinations: destinations, mixin: mixin, unlock_time: unlock_time}
-      |> Map.merge(opts_map)
+      opts
+      |> build_opts([:payment_id, :get_tx_key, :priority, :do_not_relay, :get_tx_hex])
+      |> Map.merge(%{destinations: destinations, mixin: mixin, unlock_time: unlock_time}, opts_map)
 
     request("transfer", params)
   end
