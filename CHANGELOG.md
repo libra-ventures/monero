@@ -2,8 +2,10 @@
 
 Added:
 
-  - `Daemon` service calls:
+  - `Daemon` service with following calls
     - `sendrawtransaction`
+    - `get_fee_estimate`
+    - `getheight`
   - `Wallet` service calls:
     - `getaddress`
     - `get_payments`
@@ -17,15 +19,7 @@ Updates:
   - Fix double-nested `Wallet` configuration structure in the `README`
   - Properly handle misconfigured service errors, like wrong `--wallet-file` argument
 
-### Monero 0.9.1
-
-Added:
-
-  - `Daemon` service with following calls
-    - `get_fee_estimate`
-    - `getheight`
-
-### Monero v0.9.0
+### Monero 0.9.0
 
 Using ExAws as a foundation allowed us to inherit following features for free:
 
