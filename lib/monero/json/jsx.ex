@@ -5,7 +5,7 @@ defmodule Monero.JSON.JSX do
 
   if Code.ensure_loaded?(:jsx) do
     def encode!(%{} = map) do
-      :jsx.encode(map )
+      :jsx.encode(map)
     end
 
     def decode!(string) do
@@ -22,18 +22,14 @@ defmodule Monero.JSON.JSX do
   end
 
   def encode(map) do
-    try do
-      {:ok, encode!(map)}
-    rescue
-      ArgumentError -> {:error, :badarg}
-    end
+    {:ok, encode!(map)}
+  rescue
+    ArgumentError -> {:error, :badarg}
   end
 
   def decode(string) do
-    try do
-      {:ok, decode!(string)}
-    rescue
-      ArgumentError -> {:error, :badarg}
-    end
+    {:ok, decode!(string)}
+  rescue
+    ArgumentError -> {:error, :badarg}
   end
 end

@@ -12,7 +12,7 @@ defmodule Monero.Mixfile do
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-      description: "Monero client. Currently supports Wallet RPC API",
+      description: "Monero API client",
       name: "Monero",
       source_url: "https://github.com/libra-ventures/monero",
       docs: [
@@ -29,7 +29,7 @@ defmodule Monero.Mixfile do
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib",]
+  defp elixirc_paths(_),     do: ["lib"]
 
   defp deps do
     [
@@ -44,7 +44,7 @@ defmodule Monero.Mixfile do
     ]
   end
 
-  defp version(), do: "0.9.0"
+  defp version(), do: "0.10.0"
 
   defp package() do
     [
