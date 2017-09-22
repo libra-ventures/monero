@@ -81,17 +81,9 @@ defmodule Monero.Wallet do
 
   Args:
   * `destinations` - List of destinations to receive XMR.
-  * `mixin` - Number of outpouts from the blockchain to mix with (0 means no mixing).
+  * `mixin` - Number of outputs from the blockchain to mix with (0 means no mixing).
   * `unlock_time` - Number of blocks before the monero can be spent (0 to not add a lock)
-  * `payment_id` - (Optional) Random 32-byte/64-character hex string to identify a transaction.
-  * `get_tx_key` - (Optional) Return the transaction key after sending.
-  * `priority` - (Optional) Set a priority for the transaction. Accepted Values are:
-    * `0` - default
-    * `1` - unimportant
-    * `2` - normal
-    * `3` - elevated
-  * `do_not_relay` - (Optional) avoid relaying the transaction to the network.
-  * `get_tx_hex` - (Optional) Return the transaction as hex string after sending
+  * optional arguments in a form of keyword list as described in the documentation
 
   **NOTE:** destination amount is in atomic units, means 1e12 = 1 XMR
   """
