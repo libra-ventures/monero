@@ -8,7 +8,7 @@ defmodule Support.WalletHelpers do
       json_codec: Poison,
       password: "password",
       retries: [max_attempts: 10, base_backoff_in_ms: 10, max_backoff_in_ms: 10_000],
-      url: "http://127.0.0.1:18081",
+      url: "http://127.0.0.1:18082",
       user: "user"
     }
 

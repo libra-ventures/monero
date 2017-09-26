@@ -6,7 +6,7 @@ config :monero,
   json_codec: Test.JSONCodec
 
 config :monero, :wallet,
-  url: "http://127.0.0.1:18081"
+  url: "http://127.0.0.1:18082"
 
 config :monero, :daemon,
   url: "http://127.0.0.1:28081"
