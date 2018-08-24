@@ -10,7 +10,7 @@ defmodule Monero.Config.Defaults do
       max_attempts: 10,
       base_backoff_in_ms: 10,
       max_backoff_in_ms: 10_000
-    ],
+    ]
   }
 
   @defaults %{
@@ -19,7 +19,6 @@ defmodule Monero.Config.Defaults do
       user: {:system, "MONERO_WALLET_RPC_USER"},
       password: {:system, "MONERO_WALLET_RPC_PASSWORD"}
     },
-
     daemon: %{
       url: {:system, "MONERO_DAEMON_RPC_URL"},
       user: {:system, "MONERO_DAEMON_RPC_USER"},
@@ -34,5 +33,6 @@ defmodule Monero.Config.Defaults do
     config = Map.merge(config, @common)
     def get(unquote(service)), do: unquote(Macro.escape(config))
   end
+
   def get(_), do: %{}
 end

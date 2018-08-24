@@ -3,12 +3,8 @@ defmodule Monero.Request.UrlTest do
   alias Monero.Request.Url
 
   setup do
-    query = %{
-      path: "/path",
-    }
-    config = %{
-      url: "http://127.0.0.1:18081"
-    }
+    query = %{path: "/path"}
+    config = %{url: "http://127.0.0.1:18081"}
 
     {:ok, %{query: query, config: config}}
   end

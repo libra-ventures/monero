@@ -5,13 +5,13 @@ defmodule Monero.Mixfile do
     [
       app: :monero,
       version: version(),
-      elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
-      elixirc_paths: elixirc_paths(Mix.env),
+      elixir: "~> 1.6",
+      start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       description: "Monero API client",
       name: "Monero",
       source_url: "https://github.com/libra-ventures/monero",
@@ -29,18 +29,18 @@ defmodule Monero.Mixfile do
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
     [
-      {:hackney,      "~> 1.9",   optional: true},
-      {:jsx,          "~> 2.8",   optional: true},
-      {:poison,       ">= 3.0.0", optional: true},
-      {:httpdigest,   "~> 0.0.1", optional: true},
-      {:ex_doc,       "~> 0.16",  only: :dev, runtime: false},
-      {:dialyze,      "~> 0.2.0", only: :dev},
-      {:bypass,       "~> 0.7",   only: :test},
-      {:excoveralls,  "~> 0.7",   only: :test}
+      {:hackney, "~> 1.13", optional: true},
+      {:jsx, "~> 2.9", optional: true},
+      {:poison, ">= 3.1.0", optional: true},
+      {:httpdigest, "~> 0.0.3", optional: true},
+      {:ex_doc, "~> 0.18", only: :dev, runtime: false},
+      {:dialyze, "~> 0.2.1", only: :dev},
+      {:bypass, "~> 0.8", only: :test},
+      {:excoveralls, "~> 0.9", only: :test}
     ]
   end
 

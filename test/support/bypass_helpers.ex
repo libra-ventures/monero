@@ -2,16 +2,12 @@ defmodule Support.BypassHelpers do
   @moduledoc false
 
   def start_bypass(_) do
-    bypass = Bypass.open
+    bypass = Bypass.open()
     [bypass: bypass]
   end
 
   def service_config_for_bypass(bypass, service \\ :wallet) do
-    Monero.Config.new(service, [
-      user: "user",
-      password: "password",
-      url: "http://localhost:#{bypass.port}"
-    ])
+    Monero.Config.new(service, user: "user", password: "password", url: "http://localhost:#{bypass.port}")
   end
 
   def bypass_endpoint_url(port), do: "http://localhost:#{port}/json_rpc"

@@ -4,14 +4,19 @@ defmodule Monero.Daemon do
   https://lessless.github.io temporarly.
   """
 
-  @doc "Lookup transaction fee estimate in atomic units"
-  @spec get_fee_estimate() :: Monero.Operation.Query.t
-  def get_fee_estimate() do
-    rpc_request("get_fee_estimate")
+  @doc """
+  Lookup transaction fee estimate in atomic units
+
+  Args:
+  * `grace_blocks` - number of blocks we want the fee to be valid for (optional).
+  """
+  @spec get_fee_estimate(non_neg_integer()) :: Monero.Operation.Query.t()
+  def get_fee_estimate(grace_blocks \\ 0) do
+    rpc_request("get_fee_estimate", %{grace_blocks: grace_blocks})
   end
 
   @doc "Get the node's current height."
-  @spec getheight() :: Monero.Operation.Query.t
+  @spec getheight() :: Monero.Operation.Query.t()
   def getheight() do
     request("getheight")
   end
@@ -21,10 +26,11 @@ defmodule Monero.Daemon do
 
   Args:
   * `tx_hex` - Full transaction information as hexidecimal string.
+  * `do_not_relay` - Stop relaying transaction to other nodes (default is false).
   """
-  @spec sendrawtransaction(String.t) :: Monero.Operation.Query.t
-  def sendrawtransaction(tx_hex) do
-    request("sendrawtransaction", %{tx_as_hex: tx_hex})
+  @spec send_raw_transaction(String.t(), boolean) :: Monero.Operation.Query.t()
+  def send_raw_transaction(tx_hex, do_not_relay \\ false) do
+    request("sendrawtransaction", %{tx_as_hex: tx_hex, do_not_relay: do_not_relay})
   end
 
   ## Request
@@ -36,7 +42,8 @@ defmodule Monero.Daemon do
 
   defp request(action, data \\ %{}) do
     path = "/#{action}"
-    %Monero.Operation.Query {
+
+    %Monero.Operation.Query{
       action: action,
       path: path,
       data: data,
