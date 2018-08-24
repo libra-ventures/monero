@@ -19,9 +19,15 @@ defmodule Monero.Auth do
   defp digest_auth_header(http_method, url, config, challenge_headers) do
     uri = URI.parse(url)
     method_string = http_method |> Atom.to_string() |> String.upcase()
-    %{"Authorization" => auth_response} = Httpdigest.create_header(
-      challenge_headers, config.user, config.password, method_string, uri.path
-    )
+
+    %{"Authorization" => auth_response} =
+      Httpdigest.create_header(
+        challenge_headers,
+        config.user,
+        config.password,
+        method_string,
+        uri.path
+      )
 
     {"Authorization", auth_response}
   end

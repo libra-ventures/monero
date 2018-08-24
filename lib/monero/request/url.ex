@@ -5,7 +5,8 @@ defmodule Monero.Request.Url do
   Builds URL for an operation and a config"
   """
   def build(operation, config) do
-    URI.parse(config.url)
+    config.url
+    |> URI.parse()
     |> Map.put(:path, operation.path)
     |> normalize_path()
     |> URI.to_string()
