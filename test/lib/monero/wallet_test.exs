@@ -53,4 +53,22 @@ defmodule Monero.WalletTest do
     expected = %{jsonrpc: "2.0", method: "transfer", params: expected_params}
     assert expected == Wallet.transfer([dst], params ++ [fake: "not-permitted"]).data
   end
+
+  test "get_transfer_by_txid/2" do
+    tx_id = "f5245378d74a050d0842e2900ce273db1567b5c104b16232e6b4032732bc34c9"
+    params = [account_index: 1]
+
+    expected = expected_request_data("get_transfer_by_txid", %{txid: tx_id}, params)
+
+    assert expected == Wallet.get_transfer_by_txid(tx_id, params ++ [fake: "not-permitted"]).data
+  end
+
+  defp expected_request_data(method, required, optional) do
+    params =
+      optional
+      |> Map.new()
+      |> Map.merge(required)
+
+    %{jsonrpc: "2.0", method: method, params: params}
+  end
 end

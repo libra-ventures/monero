@@ -94,6 +94,22 @@ defmodule Monero.Wallet do
 
     request("transfer", params)
   end
+@doc """
+  Show information about a transfer to/from this address.
+
+  Args:
+  * `txid` - string; Transaction ID used to find the transfer.
+  * `account_index` - unsigned int; (Optional) Index of the account to query for the transfer.
+
+  """
+  def get_transfer_by_txid(txid, opts \\ []) do
+    params =
+      opts
+      |> build_opts([:account_index])
+      |> Map.merge(%{txid: txid})
+
+    request("get_transfer_by_txid", params)
+  end
 
   ## Request
   ######################
