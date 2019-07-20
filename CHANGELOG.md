@@ -1,3 +1,14 @@
+### Monero 0.11.0
+
+Added:
+  - `Wallet` service calls:
+    - `get_transfer_by_txid`
+    - `sign`
+    - `verify`
+
+Changed:
+  - `Wallet` service calls:
+    - `transfer` - `mixin` and `unlock_time` became optional params
 ### Monero 0.10.0
 
 Added:

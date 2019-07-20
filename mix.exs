@@ -44,7 +44,7 @@ defmodule Monero.Mixfile do
     ]
   end
 
-  defp version(), do: "0.10.0"
+  defp version(), do: "0.11.0"
 
   defp package() do
     [

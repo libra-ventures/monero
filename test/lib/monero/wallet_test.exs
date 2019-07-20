@@ -65,7 +65,7 @@ defmodule Monero.WalletTest do
   end
 
   test "get_transfer_by_txid/2" do
-    tx_id = "f5245378d74a050d0842e2900ce273db1567b5c104b16232e6b4032732bc34c9"
+    tx_id = "A TX ID"
     params = [account_index: 1]
 
     expected = expected_request_data("get_transfer_by_txid", %{txid: tx_id}, params)
@@ -73,7 +73,25 @@ defmodule Monero.WalletTest do
     assert expected == Wallet.get_transfer_by_txid(tx_id, params ++ [fake: "not-permitted"]).data
   end
 
-  defp expected_request_data(method, required, optional) do
+  test "sign/2" do
+    data = "A STRING TO SIGN"
+
+    expected = expected_request_data("sign", %{data: data})
+
+    assert expected == Wallet.sign(data).data
+  end
+
+  test "verify/2" do
+    data = "A CHALLENGE"
+    address = "A SIGNER ADDRESS"
+    signature = "A SIGNATURE"
+
+    expected = expected_request_data("verify", %{data: data, address: address, signature: signature})
+
+    assert expected == Wallet.verify(data, address, signature).data
+  end
+
+  defp expected_request_data(method, required, optional \\ []) do
     params =
       optional
       |> Map.new()
