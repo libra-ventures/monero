@@ -5,13 +5,13 @@ defmodule Monero.Daemon do
   """
 
   @doc "Lookup transaction fee estimate in atomic units"
-  @spec get_fee_estimate() :: Monero.Operation.Query.t
+  @spec get_fee_estimate() :: Monero.Operation.Query.t()
   def get_fee_estimate() do
     rpc_request("get_fee_estimate")
   end
 
   @doc "Get the node's current height."
-  @spec getheight() :: Monero.Operation.Query.t
+  @spec getheight() :: Monero.Operation.Query.t()
   def getheight() do
     request("getheight")
   end
@@ -22,7 +22,7 @@ defmodule Monero.Daemon do
   Args:
   * `tx_hex` - Full transaction information as hexidecimal string.
   """
-  @spec sendrawtransaction(String.t) :: Monero.Operation.Query.t
+  @spec sendrawtransaction(String.t()) :: Monero.Operation.Query.t()
   def sendrawtransaction(tx_hex) do
     request("sendrawtransaction", %{tx_as_hex: tx_hex})
   end
@@ -36,7 +36,8 @@ defmodule Monero.Daemon do
 
   defp request(action, data \\ %{}) do
     path = "/#{action}"
-    %Monero.Operation.Query {
+
+    %Monero.Operation.Query{
       action: action,
       path: path,
       data: data,

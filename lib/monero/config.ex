@@ -6,10 +6,13 @@ defmodule Monero.Config do
   """
 
   @common_config [
-    :http_client, :json_codec, :debug_requests, :retries
+    :http_client,
+    :json_codec,
+    :debug_requests,
+    :retries
   ]
 
-  @type t :: %{} | Keyword.t
+  @type t :: %{} | Keyword.t()
 
   @doc """
   Builds a complete set of config for an operation.
@@ -30,7 +33,7 @@ defmodule Monero.Config do
   def build_base(service, overrides \\ %{}) do
     configuration_root = :monero
     defaults = Monero.Config.Defaults.get(service)
-    common_config =  configuration_root |> Application.get_all_env() |> Map.new() |> Map.take(@common_config)
+    common_config = configuration_root |> Application.get_all_env() |> Map.new() |> Map.take(@common_config)
     service_config = configuration_root |> Application.get_env(service, []) |> Map.new()
 
     defaults
@@ -43,10 +46,13 @@ defmodule Monero.Config do
     Enum.reduce(config, config, fn
       {:url, url}, config ->
         Map.put(config, :url, retrieve_runtime_value(url, config))
+
       {:retries, retries}, config ->
         Map.put(config, :retries, retries)
+
       {:http_opts, http_opts}, config ->
         Map.put(config, :http_opts, http_opts)
+
       {k, v}, config ->
         case retrieve_runtime_value(v, config) do
           %{} = result -> Map.merge(config, result)
@@ -62,7 +68,8 @@ defmodule Monero.Config do
   def retrieve_runtime_value(values, config) when is_list(values) do
     values
     |> Stream.map(&retrieve_runtime_value(&1, config))
-    |> Enum.find(&(&1))
+    |> Enum.find(& &1)
   end
+
   def retrieve_runtime_value(value, _), do: value
 end

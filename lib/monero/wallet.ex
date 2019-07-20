@@ -5,13 +5,13 @@ defmodule Monero.Wallet do
   """
 
   @doc "Return the wallet's balance."
-  @spec getbalance() :: Monero.Operation.Query.t
+  @spec getbalance() :: Monero.Operation.Query.t()
   def getbalance() do
     request("getbalance")
   end
 
   @doc "Return the wallet's address."
-  @spec getaddress() :: Monero.Operation.Query.t
+  @spec getaddress() :: Monero.Operation.Query.t()
   def getaddress() do
     request("getaddress")
   end
@@ -22,7 +22,7 @@ defmodule Monero.Wallet do
   Args:
   * `payment_id` - Payment id of incoming payments.
   """
-  @spec get_payments(String.t) :: Monero.Operation.Query.t
+  @spec get_payments(String.t()) :: Monero.Operation.Query.t()
   def get_payments(payment_id) do
     request("get_payments", %{payment_id: payment_id})
   end
@@ -36,7 +36,7 @@ defmodule Monero.Wallet do
     * `"available"` - for only transfers which are not yet spent.
     * `"unavailable"` - for only transfers which are already spent.
   """
-  @spec incoming_transfers(Strint.t) :: Monero.Operation.Query.t
+  @spec incoming_transfers(Strint.t()) :: Monero.Operation.Query.t()
   def incoming_transfers(transfer_type) do
     request("incoming_transfers", %{transfer_type: transfer_type})
   end
@@ -50,7 +50,7 @@ defmodule Monero.Wallet do
   * `password` - Password for your wallet.
   * `language` - Language for your wallets' seed.
   """
-  @spec create_wallet(Strint.t, Strint.t, Strint.t) :: Monero.Operation.Query.t
+  @spec create_wallet(Strint.t(), Strint.t(), Strint.t()) :: Monero.Operation.Query.t()
   def create_wallet(filename, password, language) do
     request("create_wallet", %{filename: filename, password: password, language: language})
   end
@@ -63,18 +63,19 @@ defmodule Monero.Wallet do
   * `filename` - Filename for your wallet.
   * `password` - Password for your wallet.
   """
-  @spec open_wallet(Strint.t, Strint.t) :: Monero.Operation.Query.t
+  @spec open_wallet(Strint.t(), Strint.t()) :: Monero.Operation.Query.t()
   def open_wallet(filename, password) do
     request("open_wallet", %{filename: filename, password: password})
   end
 
-  @type transfer_destination :: %{amount: String.t, address: String.t}
+  @type transfer_destination :: %{amount: String.t(), address: String.t()}
 
-  @type transfer_opts :: {:payment_id, String.t}
-    | {:get_tx_key, boolean}
-    | {:priority, non_neg_integer}
-    | {:do_not_relay, boolean}
-    | {:get_tx_hex, boolean}
+  @type transfer_opts ::
+          {:payment_id, String.t()}
+          | {:get_tx_key, boolean}
+          | {:priority, non_neg_integer}
+          | {:do_not_relay, boolean}
+          | {:get_tx_hex, boolean}
 
   @doc """
   Send monero to a number of recipients.
@@ -85,16 +86,28 @@ defmodule Monero.Wallet do
 
   **NOTE:** destination amount is in atomic units, means 1e12 = 1 XMR
   """
-  @spec transfer([transfer_destination], transfer_opts) :: Monero.Operation.Query.t
+  @spec transfer([transfer_destination], transfer_opts) :: Monero.Operation.Query.t()
   def transfer(destinations, opts \\ []) do
     params =
       opts
-      |> build_opts([:payment_id, :get_tx_key, :priority, :do_not_relay, :priority, :ring_size, :unlock_time, :get_tx_hex, :mixin, :unlock_time])
+      |> build_opts([
+        :payment_id,
+        :get_tx_key,
+        :priority,
+        :do_not_relay,
+        :priority,
+        :ring_size,
+        :unlock_time,
+        :get_tx_hex,
+        :mixin,
+        :unlock_time
+      ])
       |> Map.merge(%{destinations: destinations})
 
     request("transfer", params)
   end
-@doc """
+
+  @doc """
   Show information about a transfer to/from this address.
 
   Args:
@@ -115,7 +128,7 @@ defmodule Monero.Wallet do
   ######################
 
   defp request(method, params \\ nil) do
-    %Monero.Operation.Query {
+    %Monero.Operation.Query{
       path: "/json_rpc",
       data: %{jsonrpc: "2.0", method: method, params: params},
       service: :wallet,

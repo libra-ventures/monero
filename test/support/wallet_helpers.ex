@@ -17,8 +17,11 @@ defmodule Support.WalletHelpers do
 
   def response_headers() do
     [
-      {"Server", "Epee-based"}, {"Content-Length", "98"}, {"Content-Type", "text/html"},
-      {"Last-Modified", "Thu, 07 Sep 2017 19:31:53 GMT"}, {"Accept-Ranges", "bytes"},
+      {"Server", "Epee-based"},
+      {"Content-Length", "98"},
+      {"Content-Type", "text/html"},
+      {"Last-Modified", "Thu, 07 Sep 2017 19:31:53 GMT"},
+      {"Accept-Ranges", "bytes"},
       {
         "WWW-authenticate",
         "Digest qop=\"auth\",algorithm=MD5,realm=\"monero-rpc\",nonce=\"gtC0TFr7I9WKFD1aEZZ9Og==\",stale=false"

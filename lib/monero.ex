@@ -20,8 +20,8 @@ defmodule Monero do
   ```
 
   """
-  @spec request(Monero.Operation.t) :: term
-  @spec request(Monero.Operation.t, Keyword.t) :: {:ok, term} | {:error, term}
+  @spec request(Monero.Operation.t()) :: term
+  @spec request(Monero.Operation.t(), Keyword.t()) :: {:ok, term} | {:error, term}
   def request(op, config_overrides \\ []) do
     Monero.Operation.perform(op, Monero.Config.new(op.service, config_overrides))
   end
@@ -32,8 +32,8 @@ defmodule Monero do
   Same as `request/1,2` except it will either return the successful response from
   Monero backend or raise an exception.
   """
-  @spec request!(Monero.Operation.t) :: term | no_return
-  @spec request!(Monero.Operation.t, Keyword.t) :: term | no_return
+  @spec request!(Monero.Operation.t()) :: term | no_return
+  @spec request!(Monero.Operation.t(), Keyword.t()) :: term | no_return
   def request!(op, config_overrides \\ []) do
     case request(op, config_overrides) do
       {:ok, result} ->
@@ -41,10 +41,10 @@ defmodule Monero do
 
       error ->
         raise Monero.Error, """
-          Monero Request Error!
+        Monero Request Error!
 
-          #{inspect error}
-          """
+        #{inspect(error)}
+        """
     end
   end
 end

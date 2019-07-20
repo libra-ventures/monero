@@ -44,7 +44,17 @@ defmodule Monero.WalletTest do
       address: "9wq792k9sxVZiLn66S3Qzv8QfmtcwkdXgM5cWGsXAPxoQeMQ79md51PLPCijvzk1iHbuHi91pws5B7iajTX9KTtJ4bh2tCh",
       amount: 3_000_000_000_000
     }
-    params = [payment_id: "test-payment", get_tx_key: true, priority: 1, do_not_relay: true, get_tx_hex: true, mixin: 4, unlock_time: 60]
+
+    params = [
+      payment_id: "test-payment",
+      get_tx_key: true,
+      priority: 1,
+      do_not_relay: true,
+      get_tx_hex: true,
+      mixin: 4,
+      unlock_time: 60
+    ]
+
     expected_params =
       params
       |> Map.new()

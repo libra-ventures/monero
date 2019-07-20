@@ -19,7 +19,9 @@ defmodule Monero.DaemonTest do
     tx_hex = "010002028090c...81a2e3bc0039cb0a02"
 
     assert %{
-      action: "sendrawtransaction", path: "/sendrawtransaction", data: %{tx_as_hex: ^tx_hex}
-    } = Daemon.sendrawtransaction(tx_hex)
+             action: "sendrawtransaction",
+             path: "/sendrawtransaction",
+             data: %{tx_as_hex: ^tx_hex}
+           } = Daemon.sendrawtransaction(tx_hex)
   end
 end

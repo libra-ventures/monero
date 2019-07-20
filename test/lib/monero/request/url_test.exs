@@ -4,8 +4,9 @@ defmodule Monero.Request.UrlTest do
 
   setup do
     query = %{
-      path: "/path",
+      path: "/path"
     }
+
     config = %{
       url: "http://127.0.0.1:18081"
     }
