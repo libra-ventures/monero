@@ -39,18 +39,18 @@ defmodule Monero.WalletTest do
     assert expected == Wallet.open_wallet("test-wallet", "password").data
   end
 
-  test "transfer/3" do
+  test "transfer/2" do
     dst = %{
       address: "9wq792k9sxVZiLn66S3Qzv8QfmtcwkdXgM5cWGsXAPxoQeMQ79md51PLPCijvzk1iHbuHi91pws5B7iajTX9KTtJ4bh2tCh",
       amount: 3_000_000_000_000
     }
-    params = [payment_id: "test-payment", get_tx_key: true, priority: 1, do_not_relay: true, get_tx_hex: true]
+    params = [payment_id: "test-payment", get_tx_key: true, priority: 1, do_not_relay: true, get_tx_hex: true, mixin: 4, unlock_time: 60]
     expected_params =
       params
       |> Map.new()
-      |> Map.merge(%{destinations: [dst], mixin: 4, unlock_time: 60})
+      |> Map.merge(%{destinations: [dst]})
 
     expected = %{jsonrpc: "2.0", method: "transfer", params: expected_params}
-    assert expected == Wallet.transfer([dst], 4, 60, params ++ [fake: "not-permitted"]).data
+    assert expected == Wallet.transfer([dst], params ++ [fake: "not-permitted"]).data
   end
 end

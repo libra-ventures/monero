@@ -81,18 +81,16 @@ defmodule Monero.Wallet do
 
   Args:
   * `destinations` - List of destinations to receive XMR.
-  * `mixin` - Number of outputs from the blockchain to mix with.
-  * `unlock_time` - Number of blocks before the monero can be spent (0 to not add a lock)
   * optional arguments in a form of keyword list as described in the documentation
 
   **NOTE:** destination amount is in atomic units, means 1e12 = 1 XMR
   """
-  @spec transfer([transfer_destination], non_neg_integer, non_neg_integer, transfer_opts) :: Monero.Operation.Query.t
-  def transfer(destinations, mixin, unlock_time, opts \\ []) do
+  @spec transfer([transfer_destination], transfer_opts) :: Monero.Operation.Query.t
+  def transfer(destinations, opts \\ []) do
     params =
       opts
-      |> build_opts([:payment_id, :get_tx_key, :priority, :do_not_relay, :get_tx_hex])
-      |> Map.merge(%{destinations: destinations, mixin: mixin, unlock_time: unlock_time})
+      |> build_opts([:payment_id, :get_tx_key, :priority, :do_not_relay, :priority, :ring_size, :unlock_time, :get_tx_hex, :mixin, :unlock_time])
+      |> Map.merge(%{destinations: destinations})
 
     request("transfer", params)
   end
