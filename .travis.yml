@@ -1,9 +1,9 @@
 language: elixir
-elixir: 1.5
+elixir: 1.9.0
 notifications:
   recipients:
     - yevhenii@libraventur.es
 otp_release:
-  - 20.0
+  - 22.0.7
 script:
   - "MIX_ENV=test mix do deps.get, test && mix compile && MIX_ENV=test mix coveralls.travis"
